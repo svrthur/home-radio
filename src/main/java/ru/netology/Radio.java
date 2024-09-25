@@ -1,22 +1,26 @@
 package ru.netology;
 
 public class Radio {
-    private int currentStation = 0;
-    private int currentVolume = 0;
+    private int currentStation;
+    private int currentVolume;
     private final int maxStations;
 
     // Конструктор по умолчанию
     public Radio() {
-        this.maxStations = 10; // Значение по умолчанию
+        this.maxStations = 10;
+        this.currentStation = 0;
+        this.currentVolume = 0;
     }
 
-    // Конструктор с заданием количества радиостанций
+    // Конструктор с параметром
     public Radio(int maxStations) {
         if (maxStations > 0) {
             this.maxStations = maxStations;
         } else {
-            this.maxStations = 10; // Значение по умолчанию при некорректном вводе
+            throw new IllegalArgumentException("Number of stations must be positive");
         }
+        this.currentStation = 0;
+        this.currentVolume = 0;
     }
 
     public void increaseVolume() {
