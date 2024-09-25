@@ -44,7 +44,8 @@ public class RadioTest {
 
     @Test
     void testNextStation() {
-        radio.setStation(9);
+        radio = new Radio(15); // Тестирование с количеством станций 15
+        radio.setStation(14);
         radio.nextStation();
         assertEquals(0, radio.getStation()); // Проверка перехода на первую станцию
 
@@ -55,9 +56,10 @@ public class RadioTest {
 
     @Test
     void testPreviousStation() {
+        radio = new Radio(15); // Тестирование с количеством станций 15
         radio.setStation(0);
         radio.previousStation();
-        assertEquals(9, radio.getStation()); // Проверка перехода на последнюю станцию
+        assertEquals(14, radio.getStation()); // Проверка перехода на последнюю станцию
 
         radio.setStation(5);
         radio.previousStation();
@@ -69,7 +71,7 @@ public class RadioTest {
         radio.setStation(3);
         assertEquals(3, radio.getStation());
 
-        radio.setStation(10); // Не допустимый номер
+        radio.setStation(10); // Не допустимый номер, когда станций меньше
         assertEquals(3, radio.getStation()); // Не должно измениться
 
         radio.setStation(-1); // Не допустимый номер

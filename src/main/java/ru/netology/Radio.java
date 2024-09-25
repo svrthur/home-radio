@@ -3,6 +3,21 @@ package ru.netology;
 public class Radio {
     private int currentStation = 0;
     private int currentVolume = 0;
+    private final int maxStations;
+
+    // Конструктор по умолчанию
+    public Radio() {
+        this.maxStations = 10; // Значение по умолчанию
+    }
+
+    // Конструктор с заданием количества радиостанций
+    public Radio(int maxStations) {
+        if (maxStations > 0) {
+            this.maxStations = maxStations;
+        } else {
+            this.maxStations = 10; // Значение по умолчанию при некорректном вводе
+        }
+    }
 
     public void increaseVolume() {
         if (currentVolume < 100) {
@@ -17,7 +32,7 @@ public class Radio {
     }
 
     public void nextStation() {
-        if (currentStation < 9) {
+        if (currentStation < maxStations - 1) {
             currentStation++;
         } else {
             currentStation = 0;
@@ -28,12 +43,12 @@ public class Radio {
         if (currentStation > 0) {
             currentStation--;
         } else {
-            currentStation = 9;
+            currentStation = maxStations - 1;
         }
     }
 
     public void setStation(int station) {
-        if (station >= 0 && station <= 9) {
+        if (station >= 0 && station < maxStations) {
             currentStation = station;
         }
     }
