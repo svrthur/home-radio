@@ -24,7 +24,7 @@ public class RadioTest {
 
         radio.setVolume(100);
         radio.increaseVolume();
-        assertEquals(100, radio.getVolume()); // Проверка, что не превышает максимум
+        assertEquals(100, radio.getVolume());
     }
 
     @Test
@@ -39,14 +39,14 @@ public class RadioTest {
 
         radio.setVolume(0);
         radio.decreaseVolume();
-        assertEquals(0, radio.getVolume()); // Проверка, что не опускается ниже минимума
+        assertEquals(0, radio.getVolume());
     }
 
     @Test
     void testNextStation() {
         radio.setStation(9);
         radio.nextStation();
-        assertEquals(0, radio.getStation()); // Проверка перехода на первую станцию
+        assertEquals(0, radio.getStation());
 
         radio.setStation(5);
         radio.nextStation();
@@ -57,7 +57,7 @@ public class RadioTest {
     void testPreviousStation() {
         radio.setStation(0);
         radio.previousStation();
-        assertEquals(9, radio.getStation()); // Проверка перехода на последнюю станцию
+        assertEquals(9, radio.getStation());
 
         radio.setStation(5);
         radio.previousStation();
@@ -69,11 +69,11 @@ public class RadioTest {
         radio.setStation(3);
         assertEquals(3, radio.getStation());
 
-        radio.setStation(10); // Не допустимый номер
-        assertEquals(3, radio.getStation()); // Не должно измениться
+        radio.setStation(10); // Invalid number
+        assertEquals(3, radio.getStation()); // Should remain unchanged
 
-        radio.setStation(-1); // Не допустимый номер
-        assertEquals(3, radio.getStation()); // Не должно измениться
+        radio.setStation(-1); // Invalid number
+        assertEquals(3, radio.getStation()); // Should remain unchanged
     }
 
     @Test
@@ -81,10 +81,32 @@ public class RadioTest {
         radio.setVolume(50);
         assertEquals(50, radio.getVolume());
 
-        radio.setVolume(110); // Не допустимое значение
-        assertEquals(50, radio.getVolume()); // Не должно измениться
+        radio.setVolume(110); // Invalid volume
+        assertEquals(50, radio.getVolume()); // Should remain unchanged
 
-        radio.setVolume(-10); // Не допустимое значение
-        assertEquals(50, radio.getVolume()); // Не должно измениться
+        radio.setVolume(-10); // Invalid volume
+        assertEquals(50, radio.getVolume()); // Should remain unchanged
+    }
+
+    @Test
+    void testCustomNumberOfStations() {
+        Radio customRadio = new Radio(20);
+
+        customRadio.setStation(19);
+        customRadio.nextStation();
+        assertEquals(0, customRadio.getStation());
+
+        customRadio.setStation(0);
+        customRadio.previousStation();
+        assertEquals(19, customRadio.getStation());
+    }
+
+    @Test
+    void testInvalidNumberOfStations() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new Radio(0);
+        });
+
+        assertEquals("Number of stations must be positive", exception.getMessage());
     }
 }
